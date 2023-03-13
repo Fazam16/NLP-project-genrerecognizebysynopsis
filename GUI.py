@@ -25,7 +25,7 @@ from nltk.corpus import stopwords
 # nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
 # loading the saved model
-loaded_model = keras.models.load_model('model-3-64-the best.h5')
+loaded_model = keras.models.load_model('./model-3-64-thebest.h5')
 # creating a function for Prediction
 
 def lemma(text):  # Lemmatization of cleaned body
@@ -109,7 +109,7 @@ def genre_prediction(text, n_top, file):
     # max_features = 5000
     # tokenizer.fit_on_texts(list(text))
     tokenized_text = tokenizer.texts_to_sequences(text)
-    X_te = pad_sequences(tokenized_text, maxlen=100)
+    X_te = pad_sequences(tokenized_text, maxlen=200)
     predicted = loaded_model.predict(X_te, batch_size=64, verbose=1)
     predicted = predicted[:len_text+1]
     st.write(predicted)
@@ -136,6 +136,7 @@ def uploud_button():
         text = dataframe['synopsis']
         st.write(text)
         genre_prediction(text, 5, True)
+
 def main():
     # giving a title
     st.title('Genre Prediction')
